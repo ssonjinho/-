@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>최저가 비교견적 요청하기</title>
+  <script>
+    // 폼 제출 처리
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // 폼 제출을 막고, JavaScript로 처리
+
+      var formData = new FormData(this);
+      
+      // Google Apps Script 웹 앱 URL (배포한 URL)
+      var scriptURL = "https://script.google.com/macros/s/AKfycby7qx1fMe04EC2RXkbehzjvhAEhqXTBVxvL6nlPOnVptausUVdIOt9PhV8cX9XyqTf2/exec";
+
+      // 데이터를 서버로 전송
+      fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text()) // 응답 텍스트 받기
+      .then(result => {
+        alert("완료되었습니다!"); // 폼 제출 성공 시 알림
+        document.getElementById('myForm').reset(); // 폼 초기화
+      })
+      .catch(error => {
+        console.error('Error:', error); // 오류 발생 시 출력
+        alert("제출에 실패했습니다. 다시 시도해주세요.");
+      });
+    });
+  </script>
+</head>
+<body>
+  <h1>최저가 비교견적 요청하기</h1>
+  
+  <!-- 사용자 입력 폼 -->
+  <form id="myForm">
+    <div>
+      <label for="성함">성함</label>
+      <input type="text" id="성함" name="성함" required>
+    </div>
+
+    <div>
+      <label for="전화번호">전화번호</label>
+      <input type="text" id="전화번호" name="전화번호" required>
+    </div>
+
+    <div>
+      <label for="차종">차종</label>
+      <input type="text" id="차종" name="차종" required>
+    </div>
+
+    <div>
+      <label for="요청사항">요청사항</label>
+      <textarea id="요청사항" name="요청사항" required></textarea>
+    </div>
+
+    <div>
+      <button type="submit">견적요청하기</button>
+    </div>
+  </form>
+</body>
+</html>
